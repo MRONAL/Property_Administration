@@ -3,8 +3,11 @@ create table users (
   name text not null,
   lastname text not null,
   identification text not null unique,
-  password text not null
+  password text not null,
+  created_date date not null
+
 );
+
 
 create table rol (
   id_rol bigint primary key generated always as identity,
