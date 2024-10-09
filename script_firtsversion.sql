@@ -1,56 +1,79 @@
-create table users (
-  id_user bigint primary key generated always as identity,
-  name text not null,
-  lastname text not null,
-  identification text not null unique,
-  password text not null,
-  created_date date not null
-
+CREATE DATABASE propierties_managment;
+USE propierties_managment
+-- Tabla users con campos de fecha
+CREATE TABLE users (
+  id_user BIGINT PRIMARY KEY AUTO_INCREMENT,
+  estatus VARCHAR(20) DEFAULT 'activo',
+  name VARCHAR(100) NOT NULL,
+  lastname VARCHAR(100) NOT NULL,
+  identification VARCHAR(20) NOT NULL UNIQUE,
+  password TEXT NOT NULL,
+  created_date DATE NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-
-create table rol (
-  id_rol bigint primary key generated always as identity,
-  rol text not null
+-- Tabla rol con campos de fecha
+CREATE TABLE rol (
+  id_rol BIGINT PRIMARY KEY AUTO_INCREMENT,
+  rol VARCHAR(50) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  estatus VARCHAR(20) DEFAULT 'activo'
 );
 
-create table user_rol (
-  id_user bigint not null,
-  id_rol bigint not null,
-  primary key (id_user, id_rol),
-  foreign key (id_user) references users (id_user),
-  foreign key (id_rol) references rol (id_rol)
+-- Tabla propierty_type con campos de fecha
+CREATE TABLE propierty_type (
+  id_propierty_type BIGINT PRIMARY KEY AUTO_INCREMENT,
+  type VARCHAR(50) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-create table propierty_type (
-  id_propierty_type bigint primary key generated always as identity,
-  type text not null
+-- Tabla properties con campos de fecha
+CREATE TABLE properties (
+  id_properties BIGINT PRIMARY KEY AUTO_INCREMENT,
+  dir VARCHAR(255) NOT NULL,
+  size VARCHAR(50) NOT NULL,
+  chip VARCHAR(50) NOT NULL UNIQUE,
+  c_catastral VARCHAR(50) NOT NULL UNIQUE,
+  id_type BIGINT NOT NULL,
+  id_owner BIGINT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_type) REFERENCES propierty_type (id_propierty_type),
+  FOREIGN KEY (id_owner) REFERENCES users (id_user)
 );
 
-create table propierties (
-  id_propierties bigint primary key generated always as identity,
-  dir text not null,
-  size text not null,
-  chip text not null unique,
-  c_catastral text not null unique,
-  id_type bigint not null,
-  id_owner bigint not null,
-  foreign key (id_type) references propierty_type (id_propierty_type),
-  foreign key (id_owner) references users (id_user)
+-- Tabla payment con campos de fecha
+CREATE TABLE payment (
+  id_payment BIGINT PRIMARY KEY AUTO_INCREMENT,
+  id_properties BIGINT NOT NULL,
+  price DECIMAL(10, 2) NOT NULL,
+  regularity VARCHAR(50) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_properties) REFERENCES properties (id_properties)
 );
 
-create table payment (
-  id_payment bigint primary key generated always as identity,
-  id_propertie bigint not null,
-  price numeric not null,
-  regularity text not null,
-  foreign key (id_propertie) references propierties (id_propierties)
+-- Tabla user_rol con campos de fecha
+CREATE TABLE user_rol (
+  id_user BIGINT NOT NULL,
+  id_rol BIGINT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id_user, id_rol),
+  FOREIGN KEY (id_user) REFERENCES users (id_user),
+  FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
 );
 
-create table payment_user (
-  id_user bigint not null,
-  id_payment bigint not null,
-  primary key (id_user, id_payment),
-  foreign key (id_user) references users (id_user),
-  foreign key (id_payment) references payment (id_payment)
+-- Tabla payment_user con campos de fecha
+CREATE TABLE payment_user (
+  id_user BIGINT NOT NULL,
+  id_payment BIGINT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id_user, id_payment),
+  FOREIGN KEY (id_user) REFERENCES users (id_user),
+  FOREIGN KEY (id_payment) REFERENCES payment (id_payment)
 );
