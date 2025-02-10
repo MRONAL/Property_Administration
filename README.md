@@ -17,6 +17,9 @@ docker pull mysql:latest
 ```
 docker run -d --name c_mysql_propierty -e MYSQL_ROOT_ -p 3306:3306 mysql
 ```
+## Table 
+![image](https://github.com/user-attachments/assets/11d9289a-b319-4b8f-951f-b9c6d73f858c)
+
 ## Authors ✒️
 
 * **Yecid Poveda** - *Trabajo Inicial* - yecidpovedar@gmail.com
