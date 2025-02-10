@@ -4,7 +4,7 @@ _This property management project aims to manage various aspects related to real
 
 ## Starting 🚀
 
-_El motor de base de datos utilizado es MySQL 9.0.1, una versión mejorada y eficiente del popular RDBMS. Esta versión ofrece mejoras en rendimiento, optimización de consultas y seguridad, ideal para gestionar grandes volúmenes de datos en aplicaciones web y sistemas empresariales._
+_The database engine used is MySQL 9.0.1, an improved and efficient version of the popular RDBMS. This version offers improvements in performance, query optimization and security, ideal for managing large volumes of data in web applications and enterprise systems._
 
 ### Pre-requisites 📋
 
